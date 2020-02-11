@@ -1,0 +1,13 @@
+*.swp
+*.osm
+*.o
+draw.cpp
+test.cpp
+build/
+bin/
+lib/
+.vs/
+bin/
+Debug/
+build/
+vendor/
