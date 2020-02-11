@@ -39,7 +39,7 @@ mkdir build && cd build
 ```
 From within the `build` directory, then run `cmake` and `make` as follows:
 ```
-cmake ..
+cmake -G "Visual Studio 16 2019" --config Debug "-DCMAKE_BUILD_TYPE=Debug" "-DCMAKE_TOOLCHAIN_FILE=c:/Users/Rami/CODE/vcpkg/scripts/buildsystems/vcpkg.cmake" "-DVCPKG_TARGET_TRIPLET=x64-windows" ../.
 make
 ```
 ### Running
