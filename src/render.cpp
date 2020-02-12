@@ -41,14 +41,18 @@ void Render::DrawPath(io2d::output_surface &surface) const{
 }
 
 void Render::DrawEndPosition(io2d::output_surface &surface) const{
-    if (m_Model.path.empty()) return;
+
+    /*if (m_Model.path.empty()) {
+        std::cout << "Model empty! Nothing to draw." << std::endl;
+        return;
+    }*/
     io2d::render_props aliased{ io2d::antialias::none };
     io2d::brush foreBrush{ io2d::rgba_color::red };
 
     auto pb = io2d::path_builder{}; 
     pb.matrix(m_Matrix);
 
-    pb.new_figure({(float) m_Model.path.back().x, (float) m_Model.path.back().y});
+    pb.new_figure({(float) m_Model.path.front().x, (float) m_Model.path.front().y});
     float constexpr l_marker = 0.01f;
     pb.rel_line({l_marker, 0.f});
     pb.rel_line({0.f, l_marker});
@@ -61,7 +65,7 @@ void Render::DrawEndPosition(io2d::output_surface &surface) const{
 }
 
 void Render::DrawStartPosition(io2d::output_surface &surface) const{
-    if (m_Model.path.empty()) return;
+    //if (m_Model.path.empty()) return;
 
     io2d::render_props aliased{ io2d::antialias::none };
     io2d::brush foreBrush{ io2d::rgba_color::green };
@@ -69,7 +73,7 @@ void Render::DrawStartPosition(io2d::output_surface &surface) const{
     auto pb = io2d::path_builder{}; 
     pb.matrix(m_Matrix);
 
-    pb.new_figure({(float) m_Model.path.front().x, (float) m_Model.path.front().y});
+    pb.new_figure({(float) m_Model.path.back().x, (float) m_Model.path.back().y});
     float constexpr l_marker = 0.01f;
     pb.rel_line({l_marker, 0.f});
     pb.rel_line({0.f, l_marker});
@@ -138,7 +142,7 @@ void Render::DrawRailways(io2d::output_surface &surface) const
 
 io2d::interpreted_path Render::PathLine() const
 {    
-    if( m_Model.path.empty() )
+    if (m_Model.path.empty())
         return {};
 
     const auto nodes = m_Model.path;    
@@ -147,6 +151,7 @@ io2d::interpreted_path Render::PathLine() const
     pb.matrix(m_Matrix);
     pb.new_figure( ToPoint2D( m_Model.path[0]));
 
+    
     for( int i=1; i< m_Model.path.size();i++ )
         pb.line( ToPoint2D(m_Model.path[i])); 
 
@@ -257,5 +262,6 @@ static io2d::dashes RoadDashes(Model::Road::Type type)
 
 static io2d::point_2d ToPoint2D( const Model::Node &node ) noexcept
 {
+    //std::cout << "transforming to point 2d " << node.x << "," << node.y << std::endl;
     return io2d::point_2d(static_cast<float>(node.x), static_cast<float>(node.y));
 }

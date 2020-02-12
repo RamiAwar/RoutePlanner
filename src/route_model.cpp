@@ -26,36 +26,54 @@ void RouteModel::CreateNodeToRoadHashmap() {
 }
 
 
-RouteModel::Node *RouteModel::Node::FindNeighbor(std::vector<int> node_indices) {
+RouteModel::Node* RouteModel::Node::FindNeighbor(std::vector<int> node_indices) {
   
+    Node* closest_node = nullptr;
+    float min_distance = std::numeric_limits<int>::max();
 
+    for (int index : node_indices) {
+        Node node = parent_model->SNodes()[index];
+        float d = node.distance(*this);
+
+        // Make sure we're not returning the node itself!
+        if (d != 0.0 && !node.visited) {
+            if (min_distance > d) {
+                min_distance = d;
+                closest_node = &parent_model->SNodes()[index]; // we want the main index, not address of the copy
+            }
+        }
+
+    }
+
+    return closest_node;
     
 }
 
 
 void RouteModel::Node::FindNeighbors() {
-    for (auto & road : parent_model->node_to_road[this->index]) {
-        RouteModel::Node *new_neighbor = this->FindNeighbor(parent_model->Ways()[road->way].nodes);
-        if (new_neighbor) {
-            this->neighbors.emplace_back(new_neighbor);
-        }
+    // Loop over all roads that traverse this node, and check all their nodes, and find the
+    // nearest neighbors to this node on all these roads that pass through current node
+    for (auto& road : this->parent_model->node_to_road[this->index]) {
+        RouteModel::Node* neighbor = FindNeighbor(this->parent_model->Ways()[road->way].nodes);
+        if (neighbor != nullptr) this->neighbors.push_back(neighbor);
     }
 }
 
 
-RouteModel::Node &RouteModel::FindClosestNode(float x, float y) {
-    Node input;
+RouteModel::Node& RouteModel::FindClosestNode(float x, float y) {
+    
+    RouteModel::Node input;
     input.x = x;
     input.y = y;
 
     float min_dist = std::numeric_limits<float>::max();
-    float dist;
-    int closest_idx;
+    float dist = 0.0;
+    int closest_idx = 0;
 
     for (const Model::Road &road : Roads()) {
         if (road.type != Model::Road::Type::Footway) {
             for (int node_idx : Ways()[road.way].nodes) {
-                dist = input.distance(SNodes()[node_idx]);
+                dist = SNodes()[node_idx].distance(input);
                 if (dist < min_dist) {
                     closest_idx = node_idx;
                     min_dist = dist;
