@@ -2,7 +2,8 @@
 
 This project implements A* search on open street map data. Takes an OSM file as input, and renders the shortest path from start to destination nodes.
 
-<img src="map1.png" width="600" height="450" />
+<img src="map1.jpeg" width="600" height="450" />
+<img src="map.png" width="600" height="450" />
 
 ## Cloning
 
