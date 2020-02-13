@@ -1,18 +1,14 @@
 # Route Planning Project
 
-This repo contains the starter code for the Route Planning project.
+This project implements A* search on open street map data. Takes an OSM file as input, and renders the shortest path from start to destination nodes.
 
-<img src="map.png" width="600" height="450" />
+<img src="map1.png" width="600" height="450" />
 
 ## Cloning
 
 When cloning this project, be sure to use the `--recurse-submodules` flag. Using HTTPS:
 ```
-git clone https://github.com/udacity/CppND-Route-Planning-Project.git --recurse-submodules
-```
-or with SSH:
-```
-git clone git@github.com:udacity/CppND-Route-Planning-Project.git --recurse-submodules
+git clone https://github.com/RamiAwar/RoutePlanner --recurse-submodules
 ```
 
 ## Dependencies for Running Locally
@@ -39,7 +35,7 @@ mkdir build && cd build
 ```
 From within the `build` directory, then run `cmake` and `make` as follows:
 ```
-cmake -G "Visual Studio 16 2019" --config Debug "-DCMAKE_BUILD_TYPE=Debug" "-DCMAKE_TOOLCHAIN_FILE=c:/Users/Rami/CODE/vcpkg/scripts/buildsystems/vcpkg.cmake" "-DVCPKG_TARGET_TRIPLET=x64-windows" ../.
+cmake -G "Visual Studio 16 2019" --config Debug "-DCMAKE_BUILD_TYPE=Debug" "-DCMAKE_TOOLCHAIN_FILE=c:/ENTER_PATH_HERE/vcpkg/scripts/buildsystems/vcpkg.cmake" "-DVCPKG_TARGET_TRIPLET=x64-windows" ../.
 make
 ```
 ### Running

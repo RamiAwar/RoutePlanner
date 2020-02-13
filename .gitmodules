@@ -1,9 +1,6 @@
 [submodule "thirdparty/pugixml"]
-	path = thirdparty/pugixml
+	path = vendor/pugixml
 	url = https://github.com/zeux/pugixml.git
 [submodule "thirdparty/googletest"]
 	path = thirdparty/googletest
 	url = https://github.com/abseil/googletest.git
-[submodule "vendor/googletest"]
-	path = vendor/googletest
-	url = https://github.com/google/googletest
